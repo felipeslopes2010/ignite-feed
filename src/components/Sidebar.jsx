@@ -1,7 +1,8 @@
 import { PencilLine } from "phosphor-react";
 
-import userBannerBg from "../assets/user-banner-bg.png";
+import { Avatar } from "./Avatar";
 
+import userBannerBg from "../assets/user-banner-bg.png";
 import styles from "./Sidebar.module.css";
 
 export function Sidebar() {
@@ -13,11 +14,7 @@ export function Sidebar() {
                 alt="Imagem de Background do usuário"
             />
             <div className={styles.profile}>
-                <img
-                    className={styles.avatar}
-                    src="https:github.com/felipeslopes2010.png"
-                    alt="Foto de Perfil do usuário"
-                />
+                <Avatar src="https://github.com/felipeslopes2010.png" />
 
                 <strong>Felipe Kimura</strong>
                 <span>Web Developer</span>
