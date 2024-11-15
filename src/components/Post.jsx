@@ -21,18 +21,24 @@ export function Post({ author, content, publishedAt }) {
     const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
         locale: ptBR,
         addSuffix: "true",
-    })
+    });
 
     function handleCreateNewComment(e) {
         e.preventDefault();
-        
+
         setComments([...comments, newCommentText]);
-        
+
         setNewCommentText("");
     }
 
     function handleNewCommentChange(e) {
         setNewCommentText(e.target.value);
+    }
+
+    function deleteComment(commentToDelete) {
+        const commentsWithoutDeletedOne = comments.filter(comment => comment !== commentToDelete);
+        
+        setComments(commentsWithoutDeletedOne);
     }
 
     return (
@@ -51,13 +57,13 @@ export function Post({ author, content, publishedAt }) {
                     {publishedDateRelativeToNow}
                 </time>
             </header>
-            
+
             <div className={styles.content}>
                 {
                     content.map(line => {
-                        if(line.type === "paragraph") {
+                        if (line.type === "paragraph") {
                             return <p key={line.content}>{line.content}</p>
-                        } else if(line.type === "link") {
+                        } else if (line.type === "link") {
                             return <p key={line.content}><a href="#">{line.content}</a></p>
                         }
                     })
@@ -65,9 +71,9 @@ export function Post({ author, content, publishedAt }) {
             </div>
 
             <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
-                 <strong>Deixe seu feedback</strong>
+                <strong>Deixe seu feedback</strong>
 
-                 <textarea 
+                <textarea
                     name="comment"
                     placeholder=" Escreva um comentário..."
                     value={newCommentText}
@@ -82,7 +88,13 @@ export function Post({ author, content, publishedAt }) {
             <div className={styles.commentList}>
                 {
                     comments.map(comment => {
-                        return <Comment key={comment} content={comment} />
+                        return (
+                            <Comment
+                                key={comment}
+                                content={comment}
+                                onDeleteComment={deleteComment}
+                            />
+                        )
                     })
                 }
             </div>
